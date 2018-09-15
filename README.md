@@ -1,4 +1,4 @@
-# Tarea Bases de datos CE3101 II Semestre 2018
+# Proyecto 1 de datos CE3101 II Semestre 2018
 # MOTORTEC
 Diseño de base de datos para cocesionarias
 ## Profesor: Raúl Madrigal Acuña
