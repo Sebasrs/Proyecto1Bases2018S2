@@ -1,0 +1,24 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "Webapp para mostrar las busquedas de SQL",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sebasrs/Proyecto1Bases2018S2.git"
+  },
+  "author": "Sebastian Rivera - Jean Pierre Monterry - Roberto Calderon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sebasrs/Proyecto1Bases2018S2/issues"
+  },
+  "homepage": "https://github.com/Sebasrs/Proyecto1Bases2018S2#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3"
+  }
+}
