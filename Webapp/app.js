@@ -1,6 +1,6 @@
 var express = require("express");
 var mysql = require('mysql');
-
+const JSONN = require('circular-json');
 var app = express();
 var bodyParser = require("body-parser");
 
@@ -9,7 +9,7 @@ var bodyParser = require("body-parser");
 
 //var customers = require('./routes/customers'); 
 //MysqlDataBase
-var db  = require('./database.js'); 
+var db  = require('./database3.js'); 
 
 
 
@@ -25,18 +25,37 @@ app.get("/", function(req,res){
 });
 
 
-app.get('/clientes', function (req, res) {
-	db.connection.query("SELECT * FROM Cliente", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-      res.send(result);
+app.get('/clientes', async function (req, res) {
+	try {
 
-//    return;
-  });  
+	var clientes=await db.query('SELECT * FROM Cliente');
+
+	res.send("E"+JSON.stringify(clientes[0]));
+	//res.send("hola")
+	} catch(e) {
+		console.log(e);
+	} 
+});
+app.get('/p', async function (req, res) {
+	try {
+
+	var clientes=await db.query("CALL prueba('A%')");
+
+	res.send("E"+JSON.stringify(clientes));
+	//res.send("hola")
+	} catch(e) {
+		console.log(e);
+	} 
 });
 
 
 
+/*
+crear reparacion(editado)
+insertar cliente
+reparaciones por
+
+*/
 app.listen(PORT, function(){
 	console.log("Serving MOTORTEC on port " + PORT);
 });

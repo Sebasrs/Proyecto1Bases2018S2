@@ -1,4 +1,6 @@
 var mysql = require('mysql');
+const JSONN = require('circular-json');
+
 
 var connection = mysql.createConnection({
   
@@ -12,29 +14,29 @@ connection.connect(function(err) {
   if (err) 
   	throw err;
   console.log("Connected!");
+  selecttPrueba();
+ });
 
+async function selecttPrueba(){
+  try {
+  
+    // statements
+  var res = await connection.query("SELECT * FROM Cliente");
+   console.log("Result api2 : " + JSONN.stringify(res));
+    return res ;
+  } catch(e) {
+    // statements
+    console.log(e);
+  }
+  
+}
+selecttPrueba().then((mess)=>{
+console.log("/////////FUERA DEL CALL /////////////\n"+mess+
+  "\n/////FUERA DEL CALL\n");
 });
-
-function selectPrueba(){
-	connection.query("SELECT * FROM PruebaNoBorrar",function (err,result){
- 	if (err) throw err;
-    	console.log("Result: " + result);
-    	return;
-  	});
-}
-
-
-function pruebaEntrada(){
-	var adr = '1';
-	var sql = 'SELECT * FROM PruebaNoBorrar WHERE valor = ' + mysql.escape(adr);
-	connection.query(sql, function (err, result) {
-  	if (err) throw err;
-  		console.log(result);
-  		return result;
-	});
-}
-
 module.exports = {
-	connection
-
+  connection,
+  pr:  function (){
+    return 1 
+  }
 };
