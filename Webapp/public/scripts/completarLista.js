@@ -1,19 +1,56 @@
+var tablaActual;
 var filtrosCliente = ["Cedula","Nombre","Telefono"];
-var filtrosCoche = ["Matricula","Modelo","Marca","Kilometros","Concesionario"];
+var filtrosCoche = ["Matricula","Modelo","Marca","Kilometros"];
 var filtrosMecanico = ["Cedula","Nombre","Apellido1","Apellido2","FechaDeContratacion","Salario"];
 var filtrosConcesionario = ["Nombre"];
 
-function solicitarTabla() {
+function obtenerLlaves(json){
+  var keys = [];
+  for(var key in json){
+    keys.push(key);
+  }
+  return keys;
+}
+
+function llamarTabla() {
+  google.charts.load('current', {'packages':['table']});
+  google.charts.setOnLoadCallback(dibujarTabla);
+}
+
+function dibujarTabla() {
   var filtro = {};
   $("#filtros select").each(function(select){
     var nombreFiltro = $(this).attr("id");
     var valorFiltro = $(this).val();
     filtro[nombreFiltro] = valorFiltro;
   });
-  
+  var envio = {"where" : JSON.stringify(filtro)};
+  $.post("http://192.168.100.11:5000/update/" + tablaActual, envio, function(info){
+    var data = new google.visualization.DataTable();
+    var columnas = info["columnas"];
+    var keys = obtenerLlaves(columnas[0]);
+    for(var key in keys){
+      columna = key.split(".");
+      data.addColumn("string", columna[1]);
+    }
+    var infoColumnas = [];
+    var tempColumna = [];
+    for(var columna in columnas) {
+      for(var key in keys) {
+        var valor = columna[key];
+        tempColumna.push(valor);
+      }
+      infoColumnas.push(tempColumna);
+      tempColumna = [];
+    }
+    data.addRows(infoColumnas);
+    var table = new google.visualization.Table(document.getElementById('tabla'));
+    table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+  });
 }
 
 function completarLista(nombreTabla){
+  tablaActual = nombreTabla;
   $.get( "http://192.168.100.11:5000/get/" + nombreTabla, function(data) {
     var filtros;
     switch(nombreTabla) {
@@ -53,6 +90,6 @@ function completarLista(nombreTabla){
         }
       });
     }
-    $("#filtros").append('<button class="btn boton" onclick="solicitarTabla()" >Buscar</button>');
+    $("#filtros").append('<button class="btn boton" onclick="llamarTabla()" >Buscar</button>');
   });
 }
