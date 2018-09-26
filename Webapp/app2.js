@@ -53,8 +53,39 @@ app.get("/get/:tableName",async function(req,res){
 
 app.post('/update/:tableName', async function(req,res){
 	try{
+		console.log(req.body);
 		var whereJSON = req.body.where;
 		var setParams = req.body.set;
+		res.setHeader('Content-Type', 'application/json');
+
+		var query = "UPDATE " + req.params.tableName +  " SET ";
+		
+		if(setParams){
+			query += setManager(setParams, String(req.params.tableName));
+		}
+
+		if(whereJSON){
+			query += whereManager(whereJSON, String(req.params.tableName));
+		}
+
+		query += ";";
+		console.log(query);
+		var filtros = await db.query(query);
+
+		res.send(filtros);
+
+	} catch(e){
+
+		console.log(e);
+
+	}
+});
+
+app.post('/update/:tableName', async function(req,res){
+	try{
+		var whereJSON = req.body.where;
+		var setParams = req.body.set;
+
 		res.setHeader('Content-Type', 'application/json');
 
 		var query = "UPDATE " + req.params.tableName +  " SET " + setManager(setParams, String(req.params.tableName)) +  whereManager(whereJSON, String(req.params.tableName)) + ";";
@@ -72,6 +103,7 @@ app.post('/update/:tableName', async function(req,res){
 
 function whereManager(whereJSON, firstTable){
 	var response = "";
+	console.log(whereJSON);
 	var jsonParsed = JSON.parse(whereJSON);
 
 	if(Object.keys(jsonParsed).length){
@@ -98,6 +130,7 @@ function whereManager(whereJSON, firstTable){
 
 function setManager(setParams, firstTable){
 	var response = "";
+	console.log(setParams);
 	var setJSON = JSON.parse(setParams);
 
 	if(Object.keys(setJSON).length){
