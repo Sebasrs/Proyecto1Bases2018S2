@@ -83,9 +83,7 @@ function whereManager(whereJSON){
 			}
 		});
 	}
-
-	response += ";";
-
+	
 	return response;
 };
 
