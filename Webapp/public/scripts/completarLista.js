@@ -4,7 +4,13 @@ var filtrosMecanico = ["Cedula","Nombre","Apellido1","Apellido2","FechaDeContrat
 var filtrosConcesionario = ["Nombre"];
 
 function solicitarTabla() {
-
+  var filtro = {};
+  $("#filtros select").each(function(select){
+    var nombreFiltro = $(this).attr("id");
+    var valorFiltro = $(this).val();
+    filtro[nombreFiltro] = valorFiltro;
+  });
+  
 }
 
 function completarLista(nombreTabla){
@@ -47,6 +53,6 @@ function completarLista(nombreTabla){
         }
       });
     }
-    
+    $("#filtros").append('<button class="btn boton" onclick="solicitarTabla()" >Buscar</button>');
   });
 }

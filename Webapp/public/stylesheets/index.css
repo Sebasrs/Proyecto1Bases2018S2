@@ -14,5 +14,11 @@ h1 {
 }
 
 .boton {
+  margin-top: 10px;
   margin-bottom:15px;
+}
+
+label{
+  margin-bottom: 1px;
+  margin-top: 15px;
 }
