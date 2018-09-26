@@ -6,7 +6,8 @@ const pool = mysql.createPool({
     host: "g8r9w9tmspbwmsyo.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     user: "coesgrmbpol1e57z",
     password: "nciusque494b9ikb",
-    database: "xtfq8cowzznl7iwm"
+    database: "xtfq8cowzznl7iwm",
+    typeCast: true,
 })
 
 // Ping database to check for common exception errors.
@@ -31,4 +32,10 @@ pool.getConnection((err, connection) => {
 // Promisify for Node.js async/await.
 pool.query = util.promisify(pool.query)
 
+ 
+
+
+
 module.exports = pool
+
+
