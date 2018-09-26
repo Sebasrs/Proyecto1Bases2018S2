@@ -143,6 +143,34 @@ function ponerInnerJoin(select , arregloColumnas){
 
 
 }
+//{where:'{'key':'value'}'
+function whereManager(whereJSON){
+	var response = "";
+	console.log(whereJSON);
+	var jsonParsed = JSON.parse(whereJSON);
+
+	if(Object.keys(jsonParsed).length){
+		response += " WHERE "
+		var keys = Object.keys(jsonParsed);
+		var jsonSize = keys.length;
+		var counter = 0;
+		keys.forEach(function(key){
+			var isNum = /^\d+$/.test(jsonParsed[key]);
+			if(isNum){
+				response += String(key) + "=" + String(jsonParsed[key]);
+			}else{
+				response += String(key) + "='" + String(jsonParsed[key] + "'");
+			}
+			if(counter != jsonSize - 1){
+				response += " AND "
+				counter++;
+			}
+		});
+	}
+
+	return response;
+};
+
 //traerColumnas("Cliente");
 
 
@@ -152,6 +180,8 @@ function ponerInnerJoin(select , arregloColumnas){
 app.post('/get/:tabla',async function(req,res){
 	
 	try{
+	
+
 	var ress=await db.query('Select * from Coche LIMIT 1')
 	console.log(ress);
 	console.log("-------A-----------")
@@ -167,11 +197,16 @@ app.post('/get/:tabla',async function(req,res){
 	console.log("---------Columnas------")
 	var seleect =await armarSelect(columnas,tabla);
 	console.log(seleect)
-
+	var where=req.body.where;
+	if(where){
+		seleect+=whereManager(where)
+	}
 	resultadoTabla= await db.query(seleect);
 	console.log('----------Tabla-----')
 	console.log(resultadoTabla);
 	console.log('----------Tabla-----')
+	
+
 	res.send(resultadoTabla);
 	
 
