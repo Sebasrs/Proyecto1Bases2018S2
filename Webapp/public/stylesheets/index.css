@@ -8,3 +8,11 @@ body {
 h1 {
     text-align: center;
 }
+
+.lista {
+  display: block;
+}
+
+.boton {
+  margin-bottom:15px;
+}

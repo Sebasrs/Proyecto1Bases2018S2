@@ -1,7 +1,11 @@
-var filtrosCliente = ["Cedula","Nombre","Telefono","Ubicacion"];
-var filtrosCoche = ["Matricula","Modelo","Marca","Kilometros","Color","Estado","Cliente","Concesionario"];
-var filtrosMecanico = ["Taller","Cedula","Nombre","Primer Apellido","Segundo Apellido","Fecha de Contrato","Salario"];
-var filtrosConcesionario = ["Nombre","Taller","Ubicacion"];
+var filtrosCliente = ["Cedula","Nombre","Telefono"];
+var filtrosCoche = ["Matricula","Modelo","Marca","Kilometros","Concesionario"];
+var filtrosMecanico = ["Cedula","Nombre","Apellido1","Apellido2","FechaDeContratacion","Salario"];
+var filtrosConcesionario = ["Nombre"];
+
+function solicitarTabla() {
+
+}
 
 function completarLista(nombreTabla){
   $.get( "http://192.168.100.11:5000/get/" + nombreTabla, function(data) {
@@ -20,13 +24,29 @@ function completarLista(nombreTabla){
         filtros = filtrosConcesionario;
         break;
     }
+    $("#filtros").html('');
     var i;
     for(i = 0; i < filtros.length; i++){
       var j;
       var nombreFiltro = filtros[i];
-      for(j = 0; j < data.length; j++) {
+      $("#filtros").append('<label for="' + nombreFiltro + '">' + nombreFiltro + '</label>');
+      $("#filtros").append('<select class="lista form-control" id="' + nombreFiltro + '">');
+      $("#" + nombreFiltro).append('<option value="#">Seleccione una opcion</option>');
+      for(j = 0; j < Object.keys(data).length; j++) {
         var usuario = data[j];
+        $("#" + nombreFiltro).append('<option value="' + usuario[nombreFiltro] + '">' + usuario[nombreFiltro] + '</option>');
       }
+      var textos = [];
+      $("#" + nombreFiltro + " option").each(function(option) {
+        var texto = $(this).val();
+        if(textos.includes(texto)){
+          $(this).remove();
+        }
+        else{
+          textos.push(texto);
+        }
+      });
     }
+    
   });
 }
