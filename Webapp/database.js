@@ -1,42 +1,35 @@
-var mysql = require('mysql');
-const JSONN = require('circular-json');
+const util = require('util')
+const mysql = require('mysql')
 
+const pool = mysql.createPool({
+    connectionLimit: 20,
+    host: "g8r9w9tmspbwmsyo.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    user: "coesgrmbpol1e57z",
+    password: "nciusque494b9ikb",
+    database: "xtfq8cowzznl7iwm",
+    typeCast: true,
+})
 
-var connection = mysql.createConnection({
-  
-  host: "g8r9w9tmspbwmsyo.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-  user: "coesgrmbpol1e57z",
-  password: "nciusque494b9ikb",
-  database: "xtfq8cowzznl7iwm"
+// Ping database to check for common exception errors.
+pool.getConnection((err, connection) => {
+    if (err) {
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            console.error('Database connection was closed.')
+        }
+        if (err.code === 'ER_CON_COUNT_ERROR') {
+            console.error('Database has too many connections.')
+        }
+        if (err.code === 'ECONNREFUSED') {
+            console.error('Database connection was refused.')
+        }
+    }
+
+    if (connection) connection.release()
+
+    return
 });
 
-connection.connect(function(err) {
-  if (err) 
-  	throw err;
-  console.log("Connected!");
-  selecttPrueba();
- });
+// Promisify for Node.js async/await.
+pool.query = util.promisify(pool.query)
 
-async function selecttPrueba(){
-  try {
-  
-    // statements
-  var res = await connection.query("SELECT * FROM Cliente");
-   console.log("Result api2 : " + JSONN.stringify(res));
-    return res ;
-  } catch(e) {
-    // statements
-    console.log(e);
-  }
-  
-}
-selecttPrueba().then((mess)=>{
-console.log("/////////FUERA DEL CALL /////////////\n"+mess+
-  "\n/////FUERA DEL CALL\n");
-});
-module.exports = {
-  connection,
-  pr:  function (){
-    return 1 
-  }
-};
+module.exports = pool
