@@ -22,22 +22,34 @@ function dibujarTabla() {
   $("#filtros select").each(function(select){
     var nombreFiltro = $(this).attr("id");
     var valorFiltro = $(this).val();
-    filtro[nombreFiltro] = valorFiltro;
+    if(valorFiltro !== "#"){
+      filtro[tablaActual + "." + nombreFiltro] = valorFiltro;
+    }
   });
   var envio = {"where" : JSON.stringify(filtro)};
-  $.post("http://192.168.100.11:5000/update/" + tablaActual, envio, function(info){
+  $.post("http://192.168.100.5:5000/get/" + tablaActual, envio, function(info){
     var data = new google.visualization.DataTable();
     var columnas = info["columnas"];
     var keys = obtenerLlaves(columnas[0]);
     for(var key in keys){
-      columna = key.split(".");
-      data.addColumn("string", columna[1]);
+      var k = keys[key];
+      columna = k.split(".");
+      var valor = columnas[0];
+      var tipo = valor[k];
+      if(Number.isInteger(tipo)) {
+        data.addColumn("number", columna[1]);
+      }
+      else {
+        data.addColumn("string", columna[1]);
+      }
     }
     var infoColumnas = [];
     var tempColumna = [];
     for(var columna in columnas) {
       for(var key in keys) {
-        var valor = columna[key];
+        var k = keys[key];
+        var c = columnas[columna];
+        var valor = c[k];
         tempColumna.push(valor);
       }
       infoColumnas.push(tempColumna);
