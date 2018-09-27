@@ -177,7 +177,11 @@ function insertOnTable(tableName){
 
 	serverJson["values"] = "["+JSON.stringify(jsonToInsert)+"]";
 
-	alert(serverJson);
-
-	$.post(ip + "/create/" + tableName, serverJson);
+	if(tableName === "Compra"){
+		alert("Llamo mi sp");
+		alert(JSON.stringify(jsonToInsert));
+		$.post(ip + "/comprar", jsonToInsert);
+	}else{
+		$.post(ip + "/create/" + tableName, serverJson);
+	}
 }

@@ -72,6 +72,14 @@ app.get("/distinct/:tableName/:column", async function(req,res){
 	}
 });
 
+app.post("/comprar", function(req,res){
+	var idClient = req.body.IdCliente;
+	var idCoche = req.body.IdCoche;
+	var query = "CALL `xtfq8cowzznl7iwm`.`comprarCoche`(" + idCoche + ", " + idClient + ");"
+	console.log(query);
+	db.query(query);
+});
+
 app.post('/update/:tableName', async function(req,res){
 	try{
 		var whereJSON = req.body.where;
