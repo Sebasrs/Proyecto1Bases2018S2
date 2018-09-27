@@ -57,6 +57,13 @@ app.get("/otros/:id",async function(req,res){
 	}
 });
 
+app.get("/distinct/:tableName/:column", async function(req,res){
+	res.setHeader('Content-Type', 'application/json');
+	var query = "SELECT DISTINCT " + req.params.column + " FROM " + req.params.tableName + ";";
+	console.log(query);
+	var response = await db.query(query);
+	res.send(response);
+});
 
 app.post('/update/:tableName', async function(req,res){
 	try{
