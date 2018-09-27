@@ -57,7 +57,17 @@ function formFill(table){
 	if(fill){
 		for(j = 0; j < fill.length; j++){
 			globalCount = j;
-			$.ajax({url: ip+"/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]), async:false,success: function(data){
+			if(fill[globalCount] === "Coche"){
+				$.ajax({url: ip+"/nullCoches", async:false,success: function(data){
+		        	$("#filtros").append('<label for "' + fill[globalCount] + '">' + fill[globalCount] + '</label><select id="' + fill[globalCount] + '" class="form-control"></select>');
+					$("#" + fill[globalCount]).append('<option value="#">Seleccione una opcion</option>');
+		    		var keys = Object.keys(data);
+		    		keys.forEach(function(key){
+		    			$("#"+ fill[globalCount]).append('<option value="' + String(data[key].IdCoche) + '">' + data[key].IdCoche + '</option>');
+		    		});
+		    	}});
+			}else{
+				$.ajax({url: ip+"/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]), async:false,success: function(data){
 		        $("#filtros").append('<label for "' + fill[globalCount] + '">' + fill[globalCount] + '</label><select id="' + fill[globalCount] + '" class="form-control"></select>');
 				$("#" + fill[globalCount]).append('<option value="#">Seleccione una opcion</option>');
 				var contador = 1;
@@ -73,6 +83,7 @@ function formFill(table){
 					})
 				})
 		    }});
+			}
 		}
 	}
 	$("#filtros").append('<button class="btn boton" onclick="insertOnTable(\''+ table +'\')">Agregar</button>');
@@ -178,8 +189,6 @@ function insertOnTable(tableName){
 	serverJson["values"] = "["+JSON.stringify(jsonToInsert)+"]";
 
 	if(tableName === "Compra"){
-		alert("Llamo mi sp");
-		alert(JSON.stringify(jsonToInsert));
 		$.post(ip + "/comprar", jsonToInsert);
 	}else{
 		$.post(ip + "/create/" + tableName, serverJson);

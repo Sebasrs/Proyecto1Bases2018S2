@@ -1,31 +1,31 @@
 USE xtfq8cowzznl7iwm;
 
 CREATE TABLE Pais(
-	IdPais INT NOT NULL AUTO_INCREMENT,
+    IdPais INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(45),
     PRIMARY KEY(IdPais)
 );
 
 CREATE TABLE Provincia(
-	IdProvincia INT NOT NULL AUTO_INCREMENT,
+    IdProvincia INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(45),
     PRIMARY KEY(IdProvincia)
 );
 
 CREATE TABLE Estado(
-	IdEstado INT NOT NULL AUTO_INCREMENT,
+    IdEstado INT NOT NULL AUTO_INCREMENT,
     Estado VARCHAR(45),
     PRIMARY KEY(IdEstado)
 );
 
 CREATE TABLE Color(
-	IdColor INT NOT NULL AUTO_INCREMENT,
+    IdColor INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(45),
     PRIMARY KEY(IdColor)
 );
 
 CREATE TABLE Ubicacion (
-	IdUbicacion INT NOT NULL AUTO_INCREMENT,
+    IdUbicacion INT NOT NULL AUTO_INCREMENT,
     DireccionExacta VARCHAR(100),
     IdPais INT,
     IdProvincia INT,
@@ -35,7 +35,7 @@ CREATE TABLE Ubicacion (
 );
 
 CREATE TABLE Cliente (
-	IdCliente INT NOT NULL AUTO_INCREMENT,
+    IdCliente INT NOT NULL AUTO_INCREMENT,
     Cedula VARCHAR(45),
     Nombre VARCHAR(45),
     Telefono INT,
@@ -45,14 +45,14 @@ CREATE TABLE Cliente (
 );
 
 CREATE TABLE Taller (
-	IdTaller INT NOT NULL AUTO_INCREMENT,
+    IdTaller INT NOT NULL AUTO_INCREMENT,
     IdUbicacion INT,
     PRIMARY KEY(IdTaller),
     FOREIGN KEY(IdUbicacion) REFERENCES Ubicacion(IdUbicacion) ON DELETE CASCADE
 );
 
 CREATE TABLE Mecanico (
-	IdMecanico INT NOT NULL AUTO_INCREMENT,
+    IdMecanico INT NOT NULL AUTO_INCREMENT,
     IdTaller INT,
     Cedula VARCHAR(45),
     Nombre VARCHAR(45),
@@ -65,7 +65,7 @@ CREATE TABLE Mecanico (
 );
 
 CREATE TABLE Concesionario (
-	IdConcesionario INT NOT NULL AUTO_INCREMENT,
+    IdConcesionario INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(45),
     IdTaller INT,
     IdUbicacion INT,
@@ -75,7 +75,7 @@ CREATE TABLE Concesionario (
 );
 
 CREATE TABLE Coche (
-	IdCoche INT NOT NULL AUTO_INCREMENT,
+    IdCoche INT NOT NULL AUTO_INCREMENT,
     Matricula VARCHAR(45),
     Modelo VARCHAR(45),
     Marca VARCHAR(45),
@@ -92,7 +92,7 @@ CREATE TABLE Coche (
 );
 
 CREATE TABLE Ficha (
-	IdFicha INT NOT NULL AUTO_INCREMENT,
+    IdFicha INT NOT NULL AUTO_INCREMENT,
     IdCoche INT,
     IdCliente INT,
     PRIMARY KEY(IdFicha),
