@@ -1,3 +1,4 @@
+var ip = "http://192.168.100.11:5000";
 var tablaActual;
 var filtrosCliente = ["Cedula","Nombre","Telefono"];
 var filtrosCoche = ["Matricula","Modelo","Marca","Kilometros"];
@@ -27,7 +28,7 @@ function dibujarTabla() {
     }
   });
   var envio = {"where" : JSON.stringify(filtro)};
-  $.post("http://192.168.100.5:5000/get/" + tablaActual, envio, function(info){
+  $.post(ip + "/get/" + tablaActual, envio, function(info){
     var data = new google.visualization.DataTable();
     var columnas = info["columnas"];
     var keys = obtenerLlaves(columnas[0]);
@@ -59,7 +60,7 @@ function dibujarTabla() {
 
 function completarLista(nombreTabla){
   tablaActual = nombreTabla;
-  $.get( "http://192.168.100.11:5000/get/" + nombreTabla, function(data) {
+  $.get( ip + "/get/" + nombreTabla, function(data) {
     var filtros;
     switch(nombreTabla) {
       case "Cliente":
@@ -74,8 +75,14 @@ function completarLista(nombreTabla){
       case "Concesionario":
         filtros = filtrosConcesionario;
         break;
+      case "Ficha":
+        filtros = [];
+        break;
     }
     $("#filtros").html('');
+    if(filtros.length < 1){
+      $("#filtros").append('<h4 class="boton">Sin filtros para utilizar</h4>');
+    }
     var i;
     for(i = 0; i < filtros.length; i++){
       var j;

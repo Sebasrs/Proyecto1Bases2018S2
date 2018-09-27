@@ -25,7 +25,7 @@ function actualizar() {
   var envio = { "where" : JSON.stringify(filtros), "set" : JSON.stringify(valores) };
   console.log(envio);
   $.post(ip + "/update/" + tablaActual, envio, function(info){
-    alert(info);
+    alert(ip + "/update/" + tablaActual);
   });
 }
 
@@ -56,7 +56,7 @@ function mostrarFiltros(nombreTabla) {
   $("#filtros").html('');
   $("#tabla").html('');
   tablaActual = nombreTabla;
-  $.get( "http://192.168.100.11:5000/get/" + nombreTabla, function(data) {
+  $.get( ip + "/get/" + nombreTabla, function(data) {
     var keys = obtenerLlaves(data[0]);
     for(keyIndex in keys) {
       $("#filtros").append('<label for="' + keys[keyIndex] + '">' + keys[keyIndex] + '</label>');
