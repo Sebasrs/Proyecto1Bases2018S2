@@ -57,7 +57,6 @@ function formFill(table){
 	if(fill){
 		for(j = 0; j < fill.length; j++){
 			globalCount = j;
-			alert(ip+"/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]));
 			$.ajax({url: ip+"/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]), async:false,success: function(data){
 		        $("#filtros").append('<label for "' + fill[globalCount] + '">' + fill[globalCount] + '</label><select id="' + fill[globalCount] + '" class="form-control"></select>');
 				$("#" + fill[globalCount]).append('<option value="#">Seleccione una opcion</option>');
