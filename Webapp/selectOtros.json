@@ -1,0 +1,10 @@
+{
+	"selfjoin":"select coche1.Modelo,coche1.Kilometros from Coche as coche1 inner join Coche as coche2  where coche1.Modelo='Corolla' and coche1.kilometros=200 group by coche1.Modelo;"	,
+	"having":"select count(Coche.IdCoche),Coche.Modelo from Coche group by Coche.Modelo having count(Coche.IdCoche)>3;"	,
+	"all":"select Coche.Marca from Coche where Coche.Marca < all (select idCliente from Cliente)",
+ 	"any":"select Coche.Modelo from Coche where Coche.Marca =any (select Coche.Marca from Coche)",
+ 	"union":"select Reparacion.IdCoche from Reparacion where Fecha='2018-01-01 01:01:50' union all select Coche.IdCoche from Coche",
+ 	"undefinedFunction":"select salario*2 as 'salariox2' from Mecanico",
+ 	"createView":"CREATE VIEW `clientesYcarros` AS SELECT Coche.Marca,Coche.Modelo,Coche.Matricula,Cliente.Nombre,Cliente.Telefono From Coche inner join Cliente on Coche.IdCliente=Cliente.IdCliente",
+ 	"view":"SELECT * FROM xtfq8cowzznl7iwm.clientesYcarros;"
+}

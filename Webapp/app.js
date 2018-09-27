@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 var db  = require('./database.js'); 
 const mysql = require('mysql')
 const JSONN = require('circular-json');
+const querysOtros=require('./selectOtros.json');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -29,21 +30,37 @@ app.get('/clientes', async function (req, res) {
 });
 
 app.get("/get/:tableName",async function(req,res){
+	try {
+	
 	res.setHeader('Content-Type', 'application/json');
 	var filtros = await db.query("SELECT * FROM " + req.params.tableName +  ";");
 	res.send(filtros);
+
+	} catch(e) {
+		// statements
+		console.log(e);
+	}
+	
 });
 
-app.get("/distinct/:tableName/:column", async function(req,res){
-	res.setHeader('Content-Type', 'application/json');
-	var query = "SELECT DISTINCT " + req.params.column + " FROM " + req.params.tableName + ";";
-	console.log(query);
-	var response = await db.query(query);
-	res.send(response);
+app.get("/otros/:id",async function(req,res){
+	try {
+		res.setHeader('Content-Type', 'application/json');
+		console.log(req.params.id)
+		var query=querysOtros[req.params.id];
+		var tabla = await db.query(query);
+
+		res.send(tabla);
+	} catch(e) {
+		// statements
+		console.log(e);
+	}
 });
+
 
 app.post('/update/:tableName', async function(req,res){
 	try{
+		console.log(req.body);
 		var whereJSON = req.body.where;
 		var setParams = req.body.set;
 		res.setHeader('Content-Type', 'application/json');
