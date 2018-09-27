@@ -13,7 +13,7 @@ function actualizar() {
     if(valorFiltro !== "#"){
       filtros[nombreFiltro] = valorFiltro;
     }
-  }
+  });
   var valores = {};
   $("#tabla input").each(function(select){
     var nombreFiltro = $(this).attr("id");
@@ -21,7 +21,7 @@ function actualizar() {
     if(valorFiltro !== "#"){
       filtros[nombreFiltro] = valorFiltro;
     }
-  }
+  });
   var envio = { "where" : JSON.stringify(filtros), "set" : JSON.stringify(valores) };
   $.post(ip + "/update/" + tablaActual, envio, function(info){
     alert(info);
