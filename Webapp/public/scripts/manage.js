@@ -24,23 +24,23 @@ function formFill(table){
 	$("#botonSpace").html("");
 
 	switch(table) {
-      case "cliente":
+      case "Cliente":
         input = clientInputText;
         fill = clientInputFill;
         break;
-      case "coche":
+      case "Coche":
         input = cocheInputText;
         fill = cocheInputFill;
         break;
-      case "mecanico":
+      case "Mecanico":
         input = mecanicoInputText;
         fill = mecanicoInputFill;
         break;
-      case "concesionario":
+      case "Concesionario":
         input = concesionarioInputText;
         fill = concesionarioInputFill;
         break;
-      case "compra":
+      case "Compra":
       	input = null;
       	fill = compraInputFill;
     }
@@ -60,16 +60,22 @@ function formFill(table){
 			$.ajax({url: ip+"/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]), async:false,success: function(data){
 		        $("#filtros").append('<label for "' + fill[globalCount] + '">' + fill[globalCount] + '</label><select id="' + fill[globalCount] + '" class="form-control"></select>');
 				$("#" + fill[globalCount]).append('<option value="#">Seleccione una opcion</option>');
+				var contador = 1;
 				data.forEach(function(each){
 					var keys = Object.keys(each);
 					keys.forEach(function(key){
-						$("#"+ fill[globalCount]).append('<option value="' + each[key] + '">' + each[key] + '</option>');
+						if(fill[globalCount] == "Marca" || fill[globalCount] == "Modelo"){
+							$("#"+ fill[globalCount]).append('<option value="' + each[key] + '">' + each[key] + '</option>');
+						}else{
+							$("#"+ fill[globalCount]).append('<option value="' + String(contador) + '">' + each[key] + '</option>');
+						}
+						contador++;
 					})
 				})
 		    }});
 		}
 	}
-	$("#filtros").append('<button class="btn boton" onclick="insertOnTable()" >Buscar</button>');
+	$("#filtros").append('<button class="btn boton" onclick="insertOnTable(\''+ table +'\')">Agregar</button>');
 }
 
 function getColName(table){
@@ -120,5 +126,62 @@ function getTableName(field){
 	return response;
 }
 
-function insertOnTable(){
+function insertOnTable(tableName){
+	var jsonArray = [];
+	var serverJson = {};
+	var jsonToInsert = {};
+	var fillFields;
+	var textFields;
+
+	switch(tableName) {
+      case "Cliente":
+        textFields = clientInputText;
+        fillFields = clientInputFill;
+        break;
+      case "Coche":
+        textFields = cocheInputText;
+        fillFields = cocheInputFill;
+        break;
+      case "Mecanico":
+        textFields = mecanicoInputText;
+        fillFields = mecanicoInputFill;
+        break;
+      case "Concesionario":
+        textFields = concesionarioInputText;
+        fillFields = concesionarioInputFill;
+        break;
+      case "Compra":
+      	textFields = null;
+      	fillFields = compraInputFill;
+    }
+
+	if(fillFields){
+		fillFields.forEach(function(field){
+			if(tableName === "Coche"){
+				if(field == "Marca" || field == "Modelo"){
+					jsonToInsert[field] = $("#"+field).val();
+				}else{
+					jsonToInsert["Id" + field] = $("#"+field).val();
+				}
+			}else{
+				jsonToInsert["Id" + field] = $("#"+field).val();
+			}
+		});
+	}
+
+	if(textFields){
+		textFields.forEach(function(field){
+			jsonToInsert[field] = $("#"+field).val();
+		});
+	}
+
+	serverJson["values"] = "["+JSON.stringify(jsonToInsert)+"]";
+
+	if(tableName === "Compra"){
+		alert("Llamo mi sp");
+		alert(JSON.stringify(jsonToInsert));
+		$.post(ip + "/comprar", jsonToInsert);
+	}else{
+		$.post(ip + "/create/" + tableName, serverJson);
+	}
 }
