@@ -6,5 +6,7 @@
  	"union":"select Reparacion.IdCoche from Reparacion where Fecha='2018-01-01 01:01:50' union all select Coche.IdCoche from Coche",
  	"undefinedFunction":"select salario*2 as 'salariox2' from Mecanico",
  	"createView":"CREATE VIEW `clientesYcarros` AS SELECT Coche.Marca,Coche.Modelo,Coche.Matricula,Cliente.Nombre,Cliente.Telefono From Coche inner join Cliente on Coche.IdCliente=Cliente.IdCliente",
- 	"view":"SELECT * FROM xtfq8cowzznl7iwm.clientesYcarros;"
+ 	"view":"SELECT * FROM xtfq8cowzznl7iwm.clientesYcarros;",
+ 	"LeftJoinNOTNULL":"call xtfq8cowzznl7iwm.carro_marca_kilometro('Nissan', 0)",
+ 	"LikeBetwen":"call xtfq8cowzznl7iwm.mecanico_salario_nombre('Daniel', 10, 300000)"
 }
