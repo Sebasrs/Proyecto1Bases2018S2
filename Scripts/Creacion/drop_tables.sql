@@ -3,6 +3,7 @@ USE xtfq8cowzznl7iwm;
 DROP TABLE Reparacion;
 DROP TABLE Ficha;
 DROP TABLE Coche;
+DROP TABLE CocheBackup;
 DROP TABLE Cliente;
 DROP TABLE Mecanico;
 DROP TABLE Concesionario;

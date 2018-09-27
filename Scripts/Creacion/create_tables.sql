@@ -30,8 +30,8 @@ CREATE TABLE Ubicacion (
     IdPais INT,
     IdProvincia INT,
     PRIMARY KEY(IdUbicacion),
-    FOREIGN KEY(IdProvincia) REFERENCES Provincia(IdProvincia) ON DELETE CASCADE,
-    FOREIGN KEY(IdPais) REFERENCES Pais(IdPais) ON DELETE CASCADE
+    FOREIGN KEY(IdProvincia) REFERENCES Provincia(IdProvincia),
+    FOREIGN KEY(IdPais) REFERENCES Pais(IdPais)
 );
 
 CREATE TABLE Cliente (
@@ -41,14 +41,14 @@ CREATE TABLE Cliente (
     Telefono INT,
     IdUbicacion INT,
     PRIMARY KEY(IdCliente),
-    FOREIGN KEY(IdUbicacion) REFERENCES Ubicacion(IdUbicacion) ON DELETE CASCADE
+    FOREIGN KEY(IdUbicacion) REFERENCES Ubicacion(IdUbicacion)
 );
 
 CREATE TABLE Taller (
 	IdTaller INT NOT NULL AUTO_INCREMENT,
     IdUbicacion INT,
     PRIMARY KEY(IdTaller),
-    FOREIGN KEY(IdUbicacion) REFERENCES Ubicacion(IdUbicacion) ON DELETE CASCADE
+    FOREIGN KEY(IdUbicacion) REFERENCES Ubicacion(IdUbicacion)
 );
 
 CREATE TABLE Mecanico (
@@ -61,7 +61,7 @@ CREATE TABLE Mecanico (
     FechaDeContratacion DATE,
     Salario INT,
     PRIMARY KEY(IdMecanico),
-    FOREIGN KEY(IdTaller) REFERENCES Taller(IdTaller) ON DELETE CASCADE
+    FOREIGN KEY(IdTaller) REFERENCES Taller(IdTaller)
 );
 
 CREATE TABLE Concesionario (
@@ -70,8 +70,8 @@ CREATE TABLE Concesionario (
     IdTaller INT,
     IdUbicacion INT,
     PRIMARY KEY(IdConcesionario),
-    FOREIGN KEY(IdUbicacion) REFERENCES Ubicacion(IdUbicacion) ON DELETE CASCADE,
-    FOREIGN KEY(IdTaller) REFERENCES Taller(IdTaller) ON DELETE CASCADE
+    FOREIGN KEY(IdUbicacion) REFERENCES Ubicacion(IdUbicacion),
+    FOREIGN KEY(IdTaller) REFERENCES Taller(IdTaller)
 );
 
 CREATE TABLE Coche (
@@ -85,10 +85,27 @@ CREATE TABLE Coche (
     IdCliente INT,
     IdConcesionario INT,
     PRIMARY KEY(IdCoche),
-    FOREIGN KEY(IdColor) REFERENCES Color(IdColor) ON DELETE CASCADE,
-    FOREIGN KEY(IdEstado) REFERENCES Estado(IdEstado) ON DELETE CASCADE,
-    FOREIGN KEY(IdCliente) REFERENCES Cliente(IdCliente) ON DELETE CASCADE,
-    FOREIGN KEY(IdConcesionario) REFERENCES Concesionario(IdConcesionario) ON DELETE CASCADE
+    FOREIGN KEY(IdColor) REFERENCES Color(IdColor),
+    FOREIGN KEY(IdEstado) REFERENCES Estado(IdEstado),
+    FOREIGN KEY(IdCliente) REFERENCES Cliente(IdCliente),
+    FOREIGN KEY(IdConcesionario) REFERENCES Concesionario(IdConcesionario)
+);
+
+CREATE TABLE CocheBackup (
+	IdCoche INT NOT NULL AUTO_INCREMENT,
+    Matricula VARCHAR(45),
+    Modelo VARCHAR(45),
+    Marca VARCHAR(45),
+    Kilometros INT,
+    IdColor INT,
+    IdEstado INT,
+    IdCliente INT,
+    IdConcesionario INT,
+    PRIMARY KEY(IdCoche),
+    FOREIGN KEY(IdColor) REFERENCES Color(IdColor),
+    FOREIGN KEY(IdEstado) REFERENCES Estado(IdEstado),
+    FOREIGN KEY(IdCliente) REFERENCES Cliente(IdCliente),
+    FOREIGN KEY(IdConcesionario) REFERENCES Concesionario(IdConcesionario)
 );
 
 CREATE TABLE Ficha (
@@ -96,9 +113,8 @@ CREATE TABLE Ficha (
     IdCoche INT,
     IdCliente INT,
     PRIMARY KEY(IdFicha),
-    FOREIGN KEY(IdCoche) REFERENCES Coche(IdCoche) ON DELETE CASCADE,
-    FOREIGN KEY(IdCliente) REFERENCES Cliente(IdCliente) ON DELETE CASCADE,
-    Fecha DATETIME DEFAULT CURRENT_TIMESTAMP
+    FOREIGN KEY(IdCoche) REFERENCES Coche(IdCoche),
+    FOREIGN KEY(IdCliente) REFERENCES Cliente(IdCliente)
 );
 
 CREATE TABLE Reparacion (
@@ -106,6 +122,6 @@ CREATE TABLE Reparacion (
     CantidadDeHoras INT,
     IdCoche INT,
     IdMecanico INT,
-    FOREIGN KEY(IdCoche) REFERENCES Coche(IdCoche) ON DELETE CASCADE,
-    FOREIGN KEY(IdMecanico) REFERENCES Mecanico(IdMecanico) ON DELETE CASCADE
+    FOREIGN KEY(IdCoche) REFERENCES Coche(IdCoche),
+    FOREIGN KEY(IdMecanico) REFERENCES Mecanico(IdMecanico)
 );
