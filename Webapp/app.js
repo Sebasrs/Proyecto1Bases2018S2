@@ -75,10 +75,13 @@ async function armarSelect(arregloColumnas,tabla){
 	console.log(colNormales);
 	var foregenKeys=arregloColumnas.foreanKeys;
 	var i
+	console.log("----tablaaaaaaa---");
+	console.log(tabla);
+
 	var tablas=tabla;
 	var innerJoin="";
 	for (i=0;i< colNormales.length;i++){
-		columnas+=tabla+'.'+colNormales[i];
+		columnas+=tabla+'.'+colNormales[i] +' AS '+"'"+tabla+'.'+colNormales[i]+"'";
 
 		if( i != (colNormales.length-1)){
 			columnas+=',';
@@ -105,11 +108,11 @@ async function armarSelect(arregloColumnas,tabla){
 				console.log(columnasMostrar[j]);
 				console.log(foregenKeys[j]);
 		
-			columnas+=',';
-		
-			columnas+=foregenKeys[i].substring(2)+'.'+columnasMostrar[j] +" AS '"+foregenKeys[i].substring(2)+'.'+columnasMostrar[j]+"'";
+				columnas+=',';
+			
+				columnas+=foregenKeys[i].substring(2)+'.'+columnasMostrar[j] +" AS '"+foregenKeys[i].substring(2)+'.'+columnasMostrar[j]+"'";
 
-			columnas+=' ';
+				columnas+=' ';
 			}
 
 
@@ -167,7 +170,8 @@ function whereManager(whereJSON){
 			}
 		});
 	}
-
+	console.log('-----where-----')
+	console.log(response);
 	return response;
 };
 
@@ -175,12 +179,17 @@ function whereManager(whereJSON){
 
 
 
-
+app.get("/get/:tableName",async function(req,res){
+	res.setHeader('Content-Type', 'application/json');
+	var filtros = await db.query("SELECT * FROM " + req.params.tableName +  ";");
+	res.send(filtros);
+});
 
 app.post('/get/:tabla',async function(req,res){
 	
 	try{
 	
+	console.log(req.body);
 
 	var ress=await db.query('Select * from Coche LIMIT 1')
 	console.log(ress);
@@ -194,20 +203,28 @@ app.post('/get/:tabla',async function(req,res){
 	var columnas=await traerColumnas(tabla);
 	console.log(columnas);
 
-	console.log("---------Columnas------")
 	var seleect =await armarSelect(columnas,tabla);
+	console.log("---------Selectttt-----")
+
 	console.log(seleect)
+
+	console.log("---------Selectttt-----")
+
 	var where=req.body.where;
 	if(where){
 		seleect+=whereManager(where)
 	}
+	console.log('----------Completa-----')
+	console.log(seleect);
+	console.log('----------Completa-----')
+	
 	resultadoTabla= await db.query(seleect);
 	console.log('----------Tabla-----')
 	console.log(resultadoTabla);
 	console.log('----------Tabla-----')
 	
 
-	res.send(resultadoTabla);
+	res.send({"columnas":resultadoTabla});
 	
 
 	} catch(e){
