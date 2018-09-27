@@ -3,7 +3,6 @@ var key;
 var casosPrueba = 10;
 
 function agregarBotones() {
-  $("#prueba").remove();
   var i;
   for(i = 1; i <= casosPrueba; i++) {
     $("#filtros").append('<button class="btn boton lista" onclick="ejecutarPrueba(' + i + ')">Caso de Prueba ' + i + '</button>');
@@ -40,7 +39,7 @@ function obtenerExtension(numeroPrueba) {
       return "StoreProcedure/LikeBetween";
       break;
     case 10:
-      return "";
+      return "rightJoin";
       break;
   }
 }
