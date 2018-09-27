@@ -1,4 +1,4 @@
-var ip = "http://192.168.100.5:5000";
+var ip = "http://192.168.100.11:5000";
 var tablaActual;
 var tablaCliente = [ ["Cedula","text"],["Nombre","text"],["Telefono","number"] ];
 var tablaCoche = [ ["Matricula","text"],["Modelo","text"],["Marca","text"],["Kilometros","number"] ];
@@ -16,13 +16,14 @@ function actualizar() {
   });
   var valores = {};
   $("#tabla input").each(function(select){
-    var nombreFiltro = $(this).attr("id");
-    var valorFiltro = $(this).val();
-    if(valorFiltro !== "#"){
-      filtros[nombreFiltro] = valorFiltro;
+    var nombreCampo = $(this).attr("id");
+    var valorCampo = $(this).val();
+    if(valorCampo !== ""){
+      valores[nombreCampo] = valorCampo;
     }
   });
   var envio = { "where" : JSON.stringify(filtros), "set" : JSON.stringify(valores) };
+  console.log(envio);
   $.post(ip + "/update/" + tablaActual, envio, function(info){
     alert(info);
   });
@@ -88,6 +89,8 @@ function agregarCampos(nombreTabla) {
   }
   for(index in entradas) {
     var entrada = entradas[index];
+    $("#tabla").append('<label for="' + entrada[0] + '">' + entrada[0] + '</label>');
     $("#tabla").append('<input type="' + entrada[1] + '" class="form-control" id="' + entrada[0] + '">');
   }
+  $("#tabla").append('<button class="btn boton lista" onclick="actualizar()" >Actualizar</button>');
 }
