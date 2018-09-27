@@ -34,14 +34,7 @@ function dibujarTabla() {
     for(var key in keys){
       var k = keys[key];
       columna = k.split(".");
-      var valor = columnas[0];
-      var tipo = valor[k];
-      if(Number.isInteger(tipo)) {
-        data.addColumn("number", columna[1]);
-      }
-      else {
-        data.addColumn("string", columna[1]);
-      }
+      data.addColumn("string", columna[1]);
     }
     var infoColumnas = [];
     var tempColumna = [];
@@ -50,6 +43,9 @@ function dibujarTabla() {
         var k = keys[key];
         var c = columnas[columna];
         var valor = c[k];
+        if(Number.isInteger(valor)) {
+          valor = valor.toString();
+        }
         tempColumna.push(valor);
       }
       infoColumnas.push(tempColumna);
