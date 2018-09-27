@@ -67,7 +67,6 @@ app.get("/distinct/:tableName/:column", async function(req,res){
 
 app.post('/update/:tableName', async function(req,res){
 	try{
-		console.log(req.body);
 		var whereJSON = req.body.where;
 		var setParams = req.body.set;
 		res.setHeader('Content-Type', 'application/json');
@@ -191,7 +190,6 @@ app.listen(PORT, function(){
 
 function whereManager(whereJSON){
 	var response = "";
-	console.log(whereJSON);
 	var jsonParsed = JSON.parse(whereJSON);
 
 	if(Object.keys(jsonParsed).length){
@@ -212,8 +210,6 @@ function whereManager(whereJSON){
 			}
 		});
 	}
-	console.log('-----where-----')
-	console.log(response);
 	return response;
 };
 
@@ -272,7 +268,6 @@ function insertValuesKeys(jsonArray, wantJustKey){
 
 function setManager(setParams){
 	var response = "";
-	console.log(setParams);
 	var setJSON = JSON.parse(setParams);
 
 	if(Object.keys(setJSON).length){
