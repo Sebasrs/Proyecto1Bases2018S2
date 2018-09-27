@@ -72,6 +72,13 @@ app.get("/distinct/:tableName/:column", async function(req,res){
 	}
 });
 
+app.get("/nullCoches",async function(req,res){
+	res.setHeader('Content-Type', 'application/json');
+	var query = "CALL `xtfq8cowzznl7iwm`.`coches_disponibles`();"
+	var coches = await db.query(query);
+	res.send(coches[0]);
+});
+
 app.post("/comprar", function(req,res){
 	var idClient = req.body.IdCliente;
 	var idCoche = req.body.IdCoche;
