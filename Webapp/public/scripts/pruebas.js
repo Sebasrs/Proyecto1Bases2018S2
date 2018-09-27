@@ -34,10 +34,10 @@ function obtenerExtension(numeroPrueba) {
       return "view";
       break;
     case 8:
-      return "LeftJoinNOTNULL";
+      return "StoreProcedure/LeftJoinNOTNULL";
       break;
     case 9:
-      return "LikeBetween";
+      return "StoreProcedure/LikeBetween";
       break;
     case 10:
       return "";
@@ -46,7 +46,8 @@ function obtenerExtension(numeroPrueba) {
 }
 
 function obtenerTabla() {
-  $.get(ip + "/otros/" + key, function(info){
+  $.get("http://192.168.100.5:5000/otros/" + key, function(info){
+    console.log(info);
     var keys = obtenerLlaves(info[0]);
     var data = new google.visualization.DataTable();
     for(keyIndex in keys) {
