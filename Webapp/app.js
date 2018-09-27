@@ -58,6 +58,22 @@ app.get("/otros/:id",async function(req,res){
 	}
 });
 
+app.get("/otros/StoreProcedure/:id",async function(req,res){
+	try {
+		res.setHeader('Content-Type', 'application/json');
+		console.log(req.params.id)
+		var query=querysOtros[req.params.id];
+		var tabla = await db.query(query);
+		var datos =tabla[0];
+		res.send(datos);
+
+	} catch(e) {
+		// statements
+		console.log(e);
+	}
+});
+
+
 app.get("/distinct/:tableName/:column", async function(req,res){
 	try {
 		res.setHeader('Content-Type', 'application/json');
