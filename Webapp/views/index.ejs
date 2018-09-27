@@ -60,10 +60,11 @@
 		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 		  	<!-- Contenido de la pestaña de agregar -->
 		  	<div style="padding-top: 15px;">
-		  		<button class="btn">Cliente</button>
-			  	<button class="btn">Coche</button>
-			  	<button class="btn">Mecanico</button>
-			  	<button class="btn">Concesionario</button>
+		  		<button class="btn boton" onclick="formFill('cliente')">Cliente</button>
+			  	<button class="btn boton" onclick="formFill('coche')">Coche</button>
+			  	<button class="btn boton" onclick="formFill('mecanico')">Mecanico</button>
+			  	<button class="btn boton" onclick="formFill('concesionario')">Concesionario</button>
+			  	<button class="btn boton" onclick="formFill('compra')">Compra</button>
 		  	</div>
 		  </div>
 		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -77,7 +78,7 @@
 		  </div>
 		  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 		  	<!-- Contenido de la pestaña de Visualizar -->
-		  	<div style="padding-top: 15px;">
+		  	<div style="padding-top: 5px;">
 		  		<button class="btn boton" onclick='completarLista("Cliente")'>Cliente</button>
 			  	<button class="btn boton" onclick='completarLista("Coche")'>Coche</button>
 			  	<button class="btn boton" onclick='completarLista("Mecanico")'>Mecanico</button>
@@ -99,10 +100,9 @@
 		<div class="row">
 			<div class="col-md-5">
 				<div id="filtros">
-
 				</div>
 			</div>
-			<div class="col-md-6" id="tabla">
+			<div class="col-md-7" id="tabla">
 
 			</div>
 		</div>
@@ -112,5 +112,8 @@
 	<script type="text/javascript" src="scripts/completarLista.js"></script>
 	<script type="text/javascript" src="scripts/sentencias.js"></script>
 	<script type="text/javascript" src="scripts/actualizar.js"></script>
+	<script type="text/javascript" src="scripts/manage.js"></script>
+
+	</script>
 </body>
 </html>

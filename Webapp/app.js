@@ -34,9 +34,16 @@ app.get("/get/:tableName",async function(req,res){
 	res.send(filtros);
 });
 
+app.get("/distinct/:tableName/:column", async function(req,res){
+	res.setHeader('Content-Type', 'application/json');
+	var query = "SELECT DISTINCT " + req.params.column + " FROM " + req.params.tableName + ";";
+	console.log(query);
+	var response = await db.query(query);
+	res.send(response);
+});
+
 app.post('/update/:tableName', async function(req,res){
 	try{
-		console.log(req.body);
 		var whereJSON = req.body.where;
 		var setParams = req.body.set;
 		res.setHeader('Content-Type', 'application/json');
