@@ -41,15 +41,17 @@ function formFill(table){
         fill = concesionarioInputFill;
         break;
       case "compra":
-      	input = compraInputFill;
-      	fill = null;
+      	input = null;
+      	fill = compraInputFill;
     }
 
 	var i;
 	var j;
 
-	for(i = 0; i < input.length; i++){
-		$("#filtros").append('<label for="'+ input[i] +'">'+ input[i] +'</label><input id="'+ input[i] +'" type="text" name="'+ input[i] +'" class="form-control" placeholder="'+ input[i] +'">')
+	if(input){
+		for(i = 0; i < input.length; i++){
+			$("#filtros").append('<label for="'+ input[i] +'">'+ input[i] +'</label><input id="'+ input[i] +'" type="text" name="'+ input[i] +'" class="form-control" placeholder="'+ input[i] +'">')
+		}
 	}
 
 	if(fill){
@@ -85,6 +87,12 @@ function getColName(table){
 			break;
 		case "Concesionario":
 			response = "Nombre";
+			break;
+		case "Cliente":
+			response = "Nombre";
+			break;
+		case "Coche":
+			response = "Matricula";
 			break;
 		default:
 			response = String(table);
