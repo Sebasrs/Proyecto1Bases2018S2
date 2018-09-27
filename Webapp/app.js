@@ -5,6 +5,8 @@ var db  = require('./database.js');
 const mysql = require('mysql')
 const JSONN = require('circular-json');
 const querysOtros=require('./selectOtros.json');
+var Type = require('type-of-is');
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -65,6 +67,7 @@ app.get("/otros/StoreProcedure/:id",async function(req,res){
 		var query=querysOtros[req.params.id];
 		var tabla = await db.query(query);
 		var datos =tabla[0];
+		console.log(datos);
 		res.send(datos);
 
 	} catch(e) {
@@ -73,6 +76,30 @@ app.get("/otros/StoreProcedure/:id",async function(req,res){
 	}
 });
 
+app.post("/otros/procedure/:id",async function(req,res){
+	try {
+		
+		res.setHeader('Content-Type', 'application/json');
+		
+		var query=querysOtros[req.params.id];
+	
+		var parametros=req.body.argumentos
+
+		var array = parametros.split(",").map(Number);
+		//if(Number.)
+		console.log(req.body.argumentos)
+		console.log(Type(parametros))		
+		console.log(query)		
+		console.log([3,5]);
+		var tabla = await db.query(query,array);
+		var datos =tabla[0];
+		res.send(datos);
+
+	} catch(e) {
+		// statements
+		console.log(e);
+	}
+});
 
 app.get("/distinct/:tableName/:column", async function(req,res){
 	try {
