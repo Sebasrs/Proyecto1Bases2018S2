@@ -63,7 +63,6 @@ function formFill(table){
 					$("#" + fill[globalCount]).append('<option value="#">Seleccione una opcion</option>');
 		    		var keys = Object.keys(data);
 		    		keys.forEach(function(key){
-		    			console.log(data[key].IdCoche);
 		    			$("#"+ fill[globalCount]).append('<option value="' + String(data[key].IdCoche) + '">' + data[key].IdCoche + '</option>');
 		    		});
 		    	}});
@@ -190,8 +189,6 @@ function insertOnTable(tableName){
 	serverJson["values"] = "["+JSON.stringify(jsonToInsert)+"]";
 
 	if(tableName === "Compra"){
-		alert("Llamo mi sp");
-		alert(JSON.stringify(jsonToInsert));
 		$.post(ip + "/comprar", jsonToInsert);
 	}else{
 		$.post(ip + "/create/" + tableName, serverJson);
