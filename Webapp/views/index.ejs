@@ -69,10 +69,10 @@
 		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 		  	<!-- Contenido de la pestaña de Administrar -->
 		  	<div style="padding-top: 15px;">
-		  		<button class="btn">Cliente</button>
-			  	<button class="btn">Coche</button>
-			  	<button class="btn">Mecanico</button>
-			  	<button class="btn">Concesionario</button>
+		  		<button class="btn" onclick="mostrarFiltros('Cliente')">Cliente</button>
+			  	<button class="btn" onclick="mostrarFiltros('Coche')">Coche</button>
+			  	<button class="btn" onclick="mostrarFiltros('Mecanico')">Mecanico</button>
+			  	<button class="btn" onclick="mostrarFiltros('Concesionario')">Concesionario</button>
 		  	</div>
 		  </div>
 		  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -111,5 +111,6 @@
 
 	<script type="text/javascript" src="scripts/completarLista.js"></script>
 	<script type="text/javascript" src="scripts/sentencias.js"></script>
+	<script type="text/javascript" src="scripts/actualizar.js"></script>
 </body>
 </html>
