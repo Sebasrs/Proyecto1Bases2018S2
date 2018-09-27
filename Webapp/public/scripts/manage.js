@@ -41,20 +41,23 @@ function formFill(table){
         fill = concesionarioInputFill;
         break;
       case "compra":
-      	input = compraInputFill;
-      	fill = null;
+      	input = null;
+      	fill = compraInputFill;
     }
 
 	var i;
 	var j;
 
-	for(i = 0; i < input.length; i++){
-		$("#filtros").append('<label for="'+ input[i] +'">'+ input[i] +'</label><input id="'+ input[i] +'" type="text" name="'+ input[i] +'" class="form-control" placeholder="'+ input[i] +'">')
+	if(input){
+		for(i = 0; i < input.length; i++){
+			$("#filtros").append('<label for="'+ input[i] +'">'+ input[i] +'</label><input id="'+ input[i] +'" type="text" name="'+ input[i] +'" class="form-control" placeholder="'+ input[i] +'">')
+		}
 	}
 
 	if(fill){
 		for(j = 0; j < fill.length; j++){
 			globalCount = j;
+			alert(ip+"/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]));
 			$.ajax({url: ip+"/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]), async:false,success: function(data){
 		        $("#filtros").append('<label for "' + fill[globalCount] + '">' + fill[globalCount] + '</label><select id="' + fill[globalCount] + '" class="form-control"></select>');
 				$("#" + fill[globalCount]).append('<option value="#">Seleccione una opcion</option>');
@@ -85,6 +88,12 @@ function getColName(table){
 			break;
 		case "Concesionario":
 			response = "Nombre";
+			break;
+		case "Cliente":
+			response = "Nombre";
+			break;
+		case "Coche":
+			response = "Matricula";
 			break;
 		default:
 			response = String(table);
