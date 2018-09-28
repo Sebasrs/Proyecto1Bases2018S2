@@ -28,7 +28,9 @@ function dibujarTabla() {
     }
   });
   var envio = {"where" : JSON.stringify(filtro)};
-  $.post(ip + "/get/" + tablaActual, envio, function(info){
+  console.log(envio);
+  console.log(tablaActual);
+  $.post("/get/" + tablaActual, envio, function(info){
     var data = new google.visualization.DataTable();
     var columnas = info["columnas"];
     var keys = obtenerLlaves(columnas[0]);
@@ -60,7 +62,7 @@ function dibujarTabla() {
 
 function completarLista(nombreTabla){
   tablaActual = nombreTabla;
-  $.get( ip + "/get/" + nombreTabla, function(data) {
+  $.get("/get/" + nombreTabla, function(data) {
     var filtros;
     switch(nombreTabla) {
       case "Cliente":

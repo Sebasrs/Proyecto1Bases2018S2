@@ -55,7 +55,7 @@ function mostrarFiltros(nombreTabla) {
   $("#filtros").html('');
   $("#tabla").html('');
   tablaActual = nombreTabla;
-  $.get( ip + "/get/" + nombreTabla, function(data) {
+  $.get("/get/" + nombreTabla, function(data) {
     var keys = obtenerLlaves(data[0]);
     for(keyIndex in keys) {
       $("#filtros").append('<label for="' + keys[keyIndex] + '">' + keys[keyIndex] + '</label>');

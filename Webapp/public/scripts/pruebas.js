@@ -1,6 +1,7 @@
 var ip = "http://192.168.100.11:5000";
 var key;
-var casosPrueba = 10;
+var casosPrueba = 9;
+var nombresPrueba = ["selfjoin","having","all","any","union","undefinedFunction",];
 
 function agregarBotones() {
   var i;
@@ -38,14 +39,11 @@ function obtenerExtension(numeroPrueba) {
     case 9:
       return "StoreProcedure/LikeBetween";
       break;
-    case 10:
-      return "rightJoin";
-      break;
   }
 }
 
 function obtenerTabla() {
-  $.get("http://192.168.100.5:5000/otros/" + key, function(info){
+  $.get("/otros/" + key, function(info){
     console.log(info);
     var keys = obtenerLlaves(info[0]);
     var data = new google.visualization.DataTable();
