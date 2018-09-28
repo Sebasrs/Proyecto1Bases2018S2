@@ -23,7 +23,7 @@ function actualizar() {
     }
   });
   var envio = { "where" : JSON.stringify(filtros), "set" : JSON.stringify(valores) };
-  $.post(ip + "/update/" + tablaActual, envio, function(info){
+  $.post("/update/" + tablaActual, envio, function(info){
     alert(info);
   });
 }

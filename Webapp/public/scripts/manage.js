@@ -7,7 +7,7 @@ var mecanicoInputFill = ["Taller"];
 var concesionarioInputText = ["Nombre"];
 var concesionarioInputFill = ["Taller", "Ubicacion"];
 var compraInputFill = ["Cliente", "Coche"];
-var ip = "http://192.168.100.11:5000";
+var ip = "192.168.100.9:5000";
 var fill;
 var globalCount;
 
@@ -58,7 +58,7 @@ function formFill(table){
 		for(j = 0; j < fill.length; j++){
 			globalCount = j;
 			if(fill[globalCount] === "Coche"){
-				$.ajax({url: ip+"/nullCoches", async:false,success: function(data){
+				$.ajax({url: "/nullCoches", async:false,success: function(data){
 		        	$("#filtros").append('<label for "' + fill[globalCount] + '">' + fill[globalCount] + '</label><select id="' + fill[globalCount] + '" class="form-control"></select>');
 					$("#" + fill[globalCount]).append('<option value="#">Seleccione una opcion</option>');
 		    		var keys = Object.keys(data);
@@ -67,7 +67,7 @@ function formFill(table){
 		    		});
 		    	}});
 			}else{
-				$.ajax({url: ip+"/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]), async:false,success: function(data){
+				$.ajax({url: "/distinct/"+ getTableName(fill[globalCount]) + "/" + getColName(fill[globalCount]), async:false,success: function(data){
 		        $("#filtros").append('<label for "' + fill[globalCount] + '">' + fill[globalCount] + '</label><select id="' + fill[globalCount] + '" class="form-control"></select>');
 				$("#" + fill[globalCount]).append('<option value="#">Seleccione una opcion</option>');
 				var contador = 1;
@@ -189,8 +189,8 @@ function insertOnTable(tableName){
 	serverJson["values"] = "["+JSON.stringify(jsonToInsert)+"]";
 
 	if(tableName === "Compra"){
-		$.post(ip + "/comprar", jsonToInsert);
+		$.post("/comprar", jsonToInsert);
 	}else{
-		$.post(ip + "/create/" + tableName, serverJson);
+		$.post("/create/" + tableName, serverJson);
 	}
 }
